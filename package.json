@@ -1,4 +1,7 @@
 {
+	"scripts": {
+		"start": "tsx ./src/index.tsx"
+	},
 	"dependencies": {
 		"@cosmjs/crypto": "^0.33.0",
 		"@cosmjs/encoding": "^0.33.0",
