@@ -2,7 +2,7 @@ name: Update Forum
 
 on:
   schedule:
-    - cron: '* * * * *'  # Runs every minute
+    - cron: '*/5 * * * *' # Lowest we can go is every 5 minutes.
   workflow_dispatch:
 
 jobs:
