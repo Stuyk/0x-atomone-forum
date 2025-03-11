@@ -2,7 +2,9 @@
 
 Welcome to **0x AtomOne Forum** – a decentralized forum powered entirely by **GitHub Actions** and the **AtomOne** blockchain.
 
-This forum scans the chain for specific memos at regular intervals, updating content based on the transactions it finds. The GitHub Action runs every 5 minutes to ensure the forum stays current. As this is a limitation of GitHub actions specifically.
+This forum scans the chain for specific memos at regular intervals, updating content based on the transactions it finds. The GitHub Action runs every 5-10 minutes to ensure the forum stays current. As this is a limitation of GitHub actions specifically.
+
+Yes, it's incredibly slow when it comes to updating, but the concept allows for faster iterations to exist on other server infrastructure.
 
 Even if this repository goes down, the data is on chain for as long as memos exist.
 
