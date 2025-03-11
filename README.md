@@ -1,6 +1,6 @@
 # 0x AtomOne Forum 🌐
 
-Welcome to **0x Cosmos Forum** – a decentralized forum powered entirely by **GitHub Actions** and the **AtomOne** blockchain.
+Welcome to **0x AtomOne Forum** – a decentralized forum powered entirely by **GitHub Actions** and the **AtomOne** blockchain.
 
 This forum scans the chain for specific memos at regular intervals, updating content based on the transactions it finds. The GitHub Action runs every 5 minutes to ensure the forum stays current. As this is a limitation of GitHub actions specifically.
 
