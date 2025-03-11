@@ -1,0 +1,35 @@
+name: Update Forum
+
+on:
+  schedule:
+    - cron: '* * * * *'  # Runs every minute
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    env:
+      TZ: America/New_York
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '23'
+
+    - name: Install dependencies with pnpm
+      run: |
+        npm install --frozen-lockfile
+       
+    - name: Run Block Parsing Script
+      run: pnpm tsx src/index.ts
+
+    - name: Commit and push data.json
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "Updated Data"
+        file_pattern: data.json
