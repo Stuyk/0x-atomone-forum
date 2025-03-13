@@ -11,7 +11,8 @@ const DEFAULT_MIN_BLOCK = `2168218`;
 const ActionMapping = {
   0: actionThreadCreate,
   1: actionMessageAdd,
-  2: actionMessageRemove
+  2: actionMessageRemove,
+  3: actionThreadRemove,
 }
 
 let jsonData: Forum = { admins: ['atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep'], owner: 'atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep', threads: [], lastBlock: DEFAULT_MIN_BLOCK };
@@ -252,6 +253,30 @@ function actionMessageRemove(action: MemoAction) {
 
   jsonData.threads[threadIndex].updated = new Date(Date.now()).toISOString()
   jsonData.threads[threadIndex].messages.splice(msgIndex, 1)
+}
+
+function actionThreadRemove(action: MemoAction) {
+  //
+  console.log(`Remove Thread Action Called`)
+
+  const [_, actionCode, threadHash] = action.message.split(',');
+  if (actionCode != '3') {
+    console.warn(`Skipped ${action.hash}, action code was not valid.`);
+    return;
+  }
+
+  if (!threadHash) {
+    console.warn(`Skipped ${action.hash}, missing ThreadHash at position 1`);
+    return;
+  }
+
+  const threadIndex = jsonData.threads.findIndex(x => x.hash === threadHash);
+  if (threadIndex <= -1) {
+    console.warn(`Skipped ${action.hash}, invalid thread hash at position 1`);
+    return;
+  }
+
+  jsonData.threads.splice(threadIndex, 1)
 }
 
 async function start() {
