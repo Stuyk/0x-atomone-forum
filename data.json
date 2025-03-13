@@ -35,20 +35,7 @@
 					"timestamp": "2025-03-13T15:16:58.213116697Z"
 				}
 			]
-		},
-		{
-			"title": "Example",
-			"hash": "0600ba21b9d7cc8b50fbfea3bb2de5e9fb5400b78ce2bc6d8b3be0f3b862393d",
-			"updated": "2025-03-13T20:08:02.477Z",
-			"messages": [
-				{
-					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
-					"hash": "0600ba21b9d7cc8b50fbfea3bb2de5e9fb5400b78ce2bc6d8b3be0f3b862393d",
-					"message": "Hello World",
-					"timestamp": "2025-03-13T20:07:25.218328242Z"
-				}
-			]
 		}
 	],
-	"lastBlock": "2197067"
+	"lastBlock": "2197100"
 }
