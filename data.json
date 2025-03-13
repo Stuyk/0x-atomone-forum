@@ -39,16 +39,22 @@
 		{
 			"title": "New Thread",
 			"hash": "4621ff7bc08dcf84df3d2fc20c051e0d92ff912ab5abbed99eaa869aa63de7ad",
-			"updated": "2025-03-13T20:29:13.329Z",
+			"updated": "2025-03-13T20:30:48.344Z",
 			"messages": [
 				{
 					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
 					"hash": "4621ff7bc08dcf84df3d2fc20c051e0d92ff912ab5abbed99eaa869aa63de7ad",
 					"message": "This is my new thread",
 					"timestamp": "2025-03-13T20:28:32.160454865Z"
+				},
+				{
+					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
+					"hash": "49207faa07e9f642927dd80fceacffb6de9e0b3dece73aa8e80f12caf58a5189",
+					"message": "this is a reply",
+					"timestamp": "2025-03-13T20:30:17.104417493Z"
 				}
 			]
 		}
 	],
-	"lastBlock": "2197285"
+	"lastBlock": "2197301"
 }
