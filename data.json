@@ -35,7 +35,20 @@
 					"timestamp": "2025-03-13T15:16:58.213116697Z"
 				}
 			]
+		},
+		{
+			"title": "New Thread",
+			"hash": "4621ff7bc08dcf84df3d2fc20c051e0d92ff912ab5abbed99eaa869aa63de7ad",
+			"updated": "2025-03-13T20:29:13.329Z",
+			"messages": [
+				{
+					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
+					"hash": "4621ff7bc08dcf84df3d2fc20c051e0d92ff912ab5abbed99eaa869aa63de7ad",
+					"message": "This is my new thread",
+					"timestamp": "2025-03-13T20:28:32.160454865Z"
+				}
+			]
 		}
 	],
-	"lastBlock": "2197256"
+	"lastBlock": "2197285"
 }
