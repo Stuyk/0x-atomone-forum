@@ -39,3 +39,11 @@ To delete a reply, send a memo in the following format:
 ```
 0xForum,2,thread-hash,message-hash
 ```
+
+### Delete Thread
+
+To delete a thread and all of its messages, send a memo in the following format:
+
+```
+0xForum,2,thread-hash
+```
