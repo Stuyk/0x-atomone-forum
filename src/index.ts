@@ -217,7 +217,7 @@ function actionMessageRemove(action: MemoAction) {
   console.log(`Remove Message Action Called`)
 
   const [_, actionCode, threadHash, msgHash] = action.message.split(',');
-  if (actionCode != '1') {
+  if (actionCode != '2') {
     console.warn(`Skipped ${action.hash}, action code was not valid.`);
     return;
   }
