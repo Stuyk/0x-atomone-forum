@@ -8,89 +8,87 @@ import * as Requests from './requests/index';
 import config from '../config.json';
 
 const ActionMapping = {
-  0: Actions.actionThreadCreate,
-  1: Actions.actionMessageAdd,
-  2: Actions.actionMessageRemove,
-  3: Actions.actionThreadRemove,
-}
+    0: Actions.actionThreadCreate,
+    1: Actions.actionMessageAdd,
+    2: Actions.actionMessageRemove,
+    3: Actions.actionThreadRemove,
+};
 
-let jsonData: Forum = { 
-  owner: 'atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep', 
-  admins: [
-    'atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep'
-  ], 
-  threads: [], 
-  lastBlock: config.DEFAULT_MIN_BLOCK 
+let jsonData: Forum = {
+    owner: 'atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep',
+    admins: ['atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep'],
+    threads: [],
+    lastBlock: config.DEFAULT_MIN_BLOCK,
 };
 
 async function getBlockActions(minBlock: string, maxBlock: string) {
-  const blockPromises: Promise<{ block: { data: { txs: Array<string> }, header: { time: string }}}>[] = [];
+    const blockPromises: Promise<{ block: { data: { txs: Array<string> }; header: { time: string } } }>[] = [];
 
-  // Get all blocks
-  for(let i = parseInt(minBlock); i <= parseInt(maxBlock); i++) {
-    console.log(`Fetching Block: ${i}`);
-    blockPromises.push(Requests.getBlockByHeight(i));
-  }
-
-  // Get all transactions
-  const blocks = await Promise.all(blockPromises);
-  const hexTxHashes: { hash: string, timestamp: string }[] = [];
-
-  for(let blockData of blocks) {
-    const txHashes = blockData.block.data.txs;
-    const timestamp = blockData.block.header.time;
-
-    for(let encodedTxHash of txHashes) {
-      hexTxHashes.push({ hash: toHex(sha256(Buffer.from(encodedTxHash, 'base64'))), timestamp })
-    }
-  }
-
-  const memoPromises: Promise<Awaited<ReturnType<typeof Requests.getMemoFromTx>>>[] = [];
-
-  // Get all memos for a transaction
-  for(let txHash of hexTxHashes) {
-    memoPromises.push(Requests.getMemoFromTx(txHash.hash, txHash.timestamp))
-  }
-
-  const messages = await Promise.all(memoPromises);
-
-  const validMessages: MemoAction[] = [];
-  for(let message of messages) {
-    if (!message) {
-      continue;
+    // Get all blocks
+    for (let i = parseInt(minBlock); i <= parseInt(maxBlock); i++) {
+        console.log(`Fetching Block: ${i}`);
+        blockPromises.push(Requests.getBlockByHeight(i));
     }
 
-    validMessages.push(message);
-  }
+    // Get all transactions
+    const blocks = await Promise.all(blockPromises);
+    const hexTxHashes: { hash: string; timestamp: string }[] = [];
 
-  return validMessages;
+    for (let blockData of blocks) {
+        const txHashes = blockData.block.data.txs;
+        const timestamp = blockData.block.header.time;
+
+        for (let encodedTxHash of txHashes) {
+            hexTxHashes.push({ hash: toHex(sha256(Buffer.from(encodedTxHash, 'base64'))), timestamp });
+        }
+    }
+
+    const memoPromises: Promise<Awaited<ReturnType<typeof Requests.getMemoFromTx>>>[] = [];
+
+    // Get all memos for a transaction
+    for (let txHash of hexTxHashes) {
+        memoPromises.push(Requests.getMemoFromTx(txHash.hash, txHash.timestamp));
+    }
+
+    const messages = await Promise.all(memoPromises);
+
+    const validMessages: MemoAction[] = [];
+    for (let message of messages) {
+        if (!message) {
+            continue;
+        }
+
+        validMessages.push(message);
+    }
+
+    return validMessages;
 }
 
 async function start() {
-  const maxBlock = await Requests.getCurrentBlockHeight();
-  
-  if (fs.existsSync('data.json')) {
-    jsonData = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-  }
-  
-  if (jsonData.lastBlock == maxBlock) {
-    console.log(`Last Block is Head Block, not parsing.`);
-    process.exit(1);
-  }
+    const maxBlock = await Requests.getCurrentBlockHeight();
 
-  const actions = await getBlockActions(jsonData.lastBlock, maxBlock);
-
-  for(let action of actions) {
-    const [_, actionCode] = action.message.split(',');
-    if (!ActionMapping[actionCode]) {
-      continue;
+    if (fs.existsSync('data.json')) {
+        jsonData = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
     }
 
-    ActionMapping[actionCode](action);
-  }
+    if (jsonData.lastBlock == maxBlock) {
+        console.log(`Last Block is Head Block, not parsing.`);
+        process.exit(1);
+    }
 
-  jsonData.lastBlock = maxBlock;
-  fs.writeFileSync('data.json', JSON.stringify(jsonData, null, '\t'))
+    const actions = await getBlockActions(jsonData.lastBlock, maxBlock);
+
+    for (let action of actions) {
+        const [_, actionCode] = action.message.split(',');
+        if (!ActionMapping[actionCode]) {
+            continue;
+        }
+
+        ActionMapping[actionCode](action);
+    }
+
+    jsonData.lastBlock = maxBlock;
+    fs.writeFileSync('data.json', JSON.stringify(jsonData, null, '\t'));
 }
 
 start();
