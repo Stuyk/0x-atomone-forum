@@ -33,3 +33,9 @@ jobs:
       with:
         commit_message: "Updated Data"
         file_pattern: data.json
+
+    - name: Upload JSON to BunnyCDN
+      run: |
+        curl -T data.json \
+        -u "storage:${{ secrets.BUNNY_STORAGE_KEY }}" \
+        ftp://${{ secrets.BUNNY_STORAGE_HOST }}/${{ secrets.BUNNY_STORAGE_ZONE }}/data.json
