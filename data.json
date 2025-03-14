@@ -80,7 +80,20 @@
 					"timestamp": "2025-03-14T03:55:51.831566282Z"
 				}
 			]
+		},
+		{
+			"title": "proposal:5",
+			"hash": "745d247126a2bdd10329f532184485fa102c24bdbd024003ebe04bd1982d70d0",
+			"updated": "2025-03-14T12:28:35.720Z",
+			"messages": [
+				{
+					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
+					"hash": "745d247126a2bdd10329f532184485fa102c24bdbd024003ebe04bd1982d70d0",
+					"message": "proposal:5",
+					"timestamp": "2025-03-14T12:27:43.979086092Z"
+				}
+			]
 		}
 	],
-	"lastBlock": "2206757"
+	"lastBlock": "2206854"
 }
