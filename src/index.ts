@@ -107,7 +107,7 @@ async function start() {
     }
 
     jsonData.lastBlock = maxBlock;
-    fs.writeFileSync('data.json', JSON.stringify(jsonData, null, '\t'));
+    fs.writeFileSync('data.json', JSON.stringify(jsonData));
     console.log(`Finished Parsing Blocks`)
 
     isParsing = false;
