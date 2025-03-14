@@ -65,16 +65,22 @@
 		{
 			"title": "proposal:2",
 			"hash": "6d711de72d84abbb1bc8ee92a72a1d115dddd414393ee76bac7db59cddc26b1e",
-			"updated": "2025-03-14T03:10:11.379Z",
+			"updated": "2025-03-14T03:58:30.074Z",
 			"messages": [
 				{
 					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
 					"hash": "6d711de72d84abbb1bc8ee92a72a1d115dddd414393ee76bac7db59cddc26b1e",
 					"message": "proposal:2",
 					"timestamp": "2025-03-14T03:06:47.328675174Z"
+				},
+				{
+					"author": "atone16k0xnxqr48qdwxreu6rgcghg0xp9hn7vpn06nm",
+					"hash": "726c198e209c4e3cd1bbcfc343e821bec4967c538e8a7497a5cd548c0634d65e",
+					"message": "This proposal passed!",
+					"timestamp": "2025-03-14T03:55:51.831566282Z"
 				}
 			]
 		}
 	],
-	"lastBlock": "2201809"
+	"lastBlock": "2201897"
 }
