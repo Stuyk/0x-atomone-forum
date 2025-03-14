@@ -21,6 +21,8 @@ let jsonData: Forum = {
     lastBlock: config.DEFAULT_MIN_BLOCK,
 };
 
+let isParsing = false;
+
 async function getBlockActions(minBlock: string, maxBlock: string) {
     const blockPromises: Promise<{ block: { data: { txs: Array<string> }; header: { time: string } } }>[] = [];
 
@@ -65,7 +67,18 @@ async function getBlockActions(minBlock: string, maxBlock: string) {
 }
 
 async function start() {
+    if (isParsing) {
+      return;
+    }
+
+    isParsing = true;
+    console.log(`Parsing Blocks`)
     const maxBlock = await Requests.getCurrentBlockHeight();
+    if (!maxBlock) {
+      console.warn(`Failed to obtain block head`);
+      isParsing = false;
+      return;
+    }
 
     if (fs.existsSync('data.json')) {
         jsonData = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
@@ -73,10 +86,11 @@ async function start() {
 
     if (jsonData.lastBlock == maxBlock) {
         console.log(`Last Block is Head Block, not parsing.`);
-        process.exit(1);
+        isParsing = false;
+        return;
     }
 
-    const actions = await getBlockActions(jsonData.lastBlock, maxBlock);
+    const actions = await getBlockActions(jsonData.lastBlock, maxBlock as string);
 
     for (let action of actions) {
         const [_, actionCode] = action.message.split(',');
@@ -87,8 +101,22 @@ async function start() {
         ActionMapping[actionCode](action);
     }
 
+    if (!maxBlock) {
+      isParsing = false;
+      return;
+    }
+
     jsonData.lastBlock = maxBlock;
     fs.writeFileSync('data.json', JSON.stringify(jsonData, null, '\t'));
+    console.log(`Finished Parsing Blocks`)
+
+    isParsing = false;
 }
 
-start();
+if (config.MODE === 'once') {
+  start();
+} else {
+  start();
+  setInterval(start, config.TIME_BETWEEN_PARSES_MS);
+}
+

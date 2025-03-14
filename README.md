@@ -47,3 +47,26 @@ To delete a thread and all of its messages, send a memo in the following format:
 ```
 0xForum,2,thread-hash
 ```
+
+## Config
+
+If you wish to change the configuration, the code block below tells you what each setting does.
+
+```ts
+{
+    // Where the pull the blocks, transactions, and block heights from
+    "ATOM_ONE_API_URL": "https://atomone-api.allinbits.com",
+    // What prefix is required in a message in order to consider it as a Forum Message
+    "MSG_PREFIX": "0xForum",
+    // Where the transfer must be sent in order to parse posts, threads, etc.
+    "TO_ADDRESS": "atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep",
+    // The minimum block where to start parsing data from
+    "DEFAULT_MIN_BLOCK": "2168218",
+    // There are two formats, 'once' and 'runtime'
+    // runtime - Creates an interval that parses blocks every 15 seconds.
+    // once - Runs the program once, and then exits.
+    "MODE": "once",
+    // Parses blocks every 15 seconds, only applies when in runtime mode
+    "TIME_BETWEEN_PARSES_MS": 15000
+}
+```

@@ -13,7 +13,7 @@ export async function getCurrentBlockHeight() {
         return data.block.header.height;
     } catch (error) {
         console.error(`Error fetching block at height`, error);
-        process.exit(1);
+        return null;
     }
 }
 
@@ -28,7 +28,7 @@ export async function getBlockByHeight(blockHeight: number) {
         return await response.json();
     } catch (error) {
         console.error(`Error fetching block at height ${blockHeight}:`, error);
-        process.exit(1);
+        return null;
     }
 }
 

@@ -2,5 +2,7 @@
     "ATOM_ONE_API_URL": "https://atomone-api.allinbits.com",
     "MSG_PREFIX": "0xForum",
     "TO_ADDRESS": "atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep",
-    "DEFAULT_MIN_BLOCK": "2168218"
+    "DEFAULT_MIN_BLOCK": "2168218",
+    "MODE": "once",
+    "TIME_BETWEEN_PARSES_MS": 15000
 }
