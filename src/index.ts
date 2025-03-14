@@ -98,7 +98,7 @@ async function start() {
             continue;
         }
 
-        ActionMapping[actionCode](action);
+        ActionMapping[actionCode](jsonData, action);
     }
 
     if (!maxBlock) {
