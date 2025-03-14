@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
-import { Forum, MemoAction } from './types';
+import { Forum, MemoAction, Transaction } from './types';
 
 const ATOM_ONE_API_URL = "https://atomone-api.allinbits.com";
 const MSG_PREFIX = "0xForum";
@@ -63,8 +63,12 @@ async function getMemoFromTx(txHash: string, timestamp: string) {
       throw new Error(`Failed to fetch transaction: ${txResponse.statusText}`);
     }
 
-    const txData = await txResponse.json() as { tx: { body: { memo: string, messages: Array<{ '@type': string, from_address: string, to_address: string }> }}};
+    const txData = await txResponse.json() as Transaction;
     if (!txData.tx.body.memo.startsWith(MSG_PREFIX)) {
+      return null;
+    }
+
+    if (txData.tx_response.code !== 0) {
       return null;
     }
 
