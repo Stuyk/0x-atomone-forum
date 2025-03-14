@@ -70,3 +70,11 @@ If you wish to change the configuration, the code block below tells you what eac
     "TIME_BETWEEN_PARSES_MS": 15000
 }
 ```
+
+## Endpoint
+
+`jsdelivr` provides a free CDN for data, when it updates is unknown. However, it works to pull data from this repository outright.
+
+```
+https://cdn.jsdelivr.net/gh/stuyk/0x-atomone-forum/data.json
+```
