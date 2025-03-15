@@ -33,6 +33,7 @@ export function actionThreadCreate(jsonData: Forum, action: MemoAction) {
                 hash: action.hash,
                 message: content,
                 timestamp: action.timestamp,
+                upvotes: [],
             },
         ],
     });

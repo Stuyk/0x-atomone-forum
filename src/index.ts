@@ -1,16 +1,17 @@
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
-import { Config, Forum, MemoAction } from './types';
+import { ACTION_CODES, Config, Forum, MemoAction } from './types';
 import * as Actions from './actions/index';
 import * as Requests from './requests/index';
 
 const ActionMapping = {
-    0: Actions.actionThreadCreate,
-    1: Actions.actionMessageAdd,
-    2: Actions.actionMessageRemove,
-    3: Actions.actionThreadRemove,
-    4: Actions.actionAdminAdd,
-    5: Actions.actionAdminRemove,
+    [ACTION_CODES.THREAD_CREATE]: Actions.actionThreadCreate,
+    [ACTION_CODES.MESSAGE_ADD]: Actions.actionMessageAdd,
+    [ACTION_CODES.MESSAGE_REMOVE]: Actions.actionMessageRemove,
+    [ACTION_CODES.THREAD_REMOVE]: Actions.actionThreadRemove,
+    [ACTION_CODES.ADMIN_ADD]: Actions.actionAdminAdd,
+    [ACTION_CODES.ADMIN_REMOVE]: Actions.actionAdminRemove,
+    [ACTION_CODES.MESSAGE_UPVOTE]: Actions.actionMessageUpvote
 };
 
 async function getBlockActions(config: Config, minBlock: string, maxBlock: string) {
@@ -43,8 +44,8 @@ async function getBlockActions(config: Config, minBlock: string, maxBlock: strin
     }
 
     const messages = await Promise.all(memoPromises);
-
     const validMessages: MemoAction[] = [];
+    
     for (let message of messages) {
         if (!message) {
             continue;

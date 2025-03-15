@@ -1,5 +1,16 @@
 type PublicKey = string;
 
+export const ACTION_CODES = {
+    THREAD_CREATE: '0',
+    MESSAGE_ADD: '1',
+    MESSAGE_REMOVE: '2',
+    THREAD_REMOVE: '3',
+    ADMIN_ADD: '4',
+    ADMIN_REMOVE: '5',
+    MESSAGE_UPVOTE: '6',
+}
+
+
 export interface Config {
     API_URL: string;
     MEMO_PREFIX: string;
@@ -30,6 +41,7 @@ export interface Message {
     hash: string;
     message: string;
     author: string;
+    upvotes: string[];
 }
 
 export interface MemoAction {

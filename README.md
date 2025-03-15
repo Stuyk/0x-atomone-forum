@@ -64,6 +64,14 @@ Requires ownership of the board to remove an admin.
 0xForum,5,address
 ```
 
+### Upvote Message
+
+Upvote a message as a user.
+
+```
+0xForum,6,thread-hash,message-hash
+```
+
 ## Config
 
 If you wish to change the configuration, the code block below tells you what each setting does.

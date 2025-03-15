@@ -35,6 +35,7 @@ export function actionMessageAdd(jsonData: Forum, action: MemoAction) {
         hash: action.hash,
         message: action.message.replace(`${_},${actionCode},${threadHash},`, ''),
         timestamp: action.timestamp,
+        upvotes: []
     });
 
     console.log(`Add Message Action Invoked`);
