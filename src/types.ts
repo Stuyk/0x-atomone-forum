@@ -1,5 +1,16 @@
 type PublicKey = string;
 
+export interface Config {
+    API_URL: string;
+    MEMO_PREFIX: string;
+    OWNER: string;
+    START_BLOCK: string;
+    MINIMUM_FEE: string;
+    DENOM: string;
+    MODE: string;
+    TIME_BETWEEN_PARSES_MS: number;
+}
+
 export interface Forum {
     owner: PublicKey;
     admins: PublicKey[];

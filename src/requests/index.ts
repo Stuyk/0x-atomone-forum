@@ -1,8 +1,6 @@
-import config from '../../config.json';
-import { Transaction } from '../types';
-import configInfo from '../../config.json';
+import { Config, Transaction } from '../types';
 
-export async function getCurrentBlockHeight() {
+export async function getCurrentBlockHeight(config: Config) {
     try {
         const response = await fetch(`${config.API_URL}/cosmos/base/tendermint/v1beta1/blocks/latest`);
         if (!response.ok) {
@@ -18,7 +16,7 @@ export async function getCurrentBlockHeight() {
     }
 }
 
-export async function getBlockByHeight(blockHeight: number) {
+export async function getBlockByHeight(config: Config, blockHeight: number) {
     try {
         const response = await fetch(`${config.API_URL}/cosmos/base/tendermint/v1beta1/blocks/${blockHeight}`);
         if (!response.ok) {
@@ -33,7 +31,7 @@ export async function getBlockByHeight(blockHeight: number) {
     }
 }
 
-export async function getMemoFromTx(txHash: string, timestamp: string) {
+export async function getMemoFromTx(config: Config, txHash: string, timestamp: string) {
     try {
         const txResponse = await fetch(`${config.API_URL}/cosmos/tx/v1beta1/txs/${txHash.toUpperCase()}`);
 
@@ -61,14 +59,14 @@ export async function getMemoFromTx(txHash: string, timestamp: string) {
 
             let total = BigInt(0);
             for(let coin of message.amount) {
-                if (coin.denom.toLowerCase() !== configInfo.DENOM) {
+                if (coin.denom.toLowerCase() !== config.DENOM) {
                     continue;
                 }
 
                 total += BigInt(coin.amount);
             }
 
-            if (total < BigInt(configInfo.MINIMUM_FEE)) {
+            if (total < BigInt(config.MINIMUM_FEE)) {
                 console.warn(`Skipping message, minimum fee was not enough. From -> ${message.from_address}`)
                 continue;
             }

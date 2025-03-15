@@ -1,11 +1,8 @@
-import * as fs from 'node:fs';
 import { sha256 } from '@cosmjs/crypto';
 import { toHex } from '@cosmjs/encoding';
-import { Forum, MemoAction } from './types';
+import { Config, Forum, MemoAction } from './types';
 import * as Actions from './actions/index';
 import * as Requests from './requests/index';
-
-import config from '../config.json';
 
 const ActionMapping = {
     0: Actions.actionThreadCreate,
@@ -16,22 +13,13 @@ const ActionMapping = {
     5: Actions.actionAdminRemove,
 };
 
-let jsonData: Forum = {
-    lastBlock: config.START_BLOCK,
-    owner: config.OWNER,
-    admins: [config.OWNER],
-    threads: [],
-};
-
-let isParsing = false;
-
-async function getBlockActions(minBlock: string, maxBlock: string) {
+async function getBlockActions(config: Config, minBlock: string, maxBlock: string) {
     const blockPromises: Promise<{ block: { data: { txs: Array<string> }; header: { time: string } } }>[] = [];
 
     // Get all blocks
     for (let i = parseInt(minBlock); i <= parseInt(maxBlock); i++) {
         console.log(`Fetching Block: ${i}`);
-        blockPromises.push(Requests.getBlockByHeight(i));
+        blockPromises.push(Requests.getBlockByHeight(config, i));
     }
 
     // Get all transactions
@@ -51,7 +39,7 @@ async function getBlockActions(minBlock: string, maxBlock: string) {
 
     // Get all memos for a transaction
     for (let txHash of hexTxHashes) {
-        memoPromises.push(Requests.getMemoFromTx(txHash.hash, txHash.timestamp));
+        memoPromises.push(Requests.getMemoFromTx(config, txHash.hash, txHash.timestamp));
     }
 
     const messages = await Promise.all(memoPromises);
@@ -68,57 +56,34 @@ async function getBlockActions(minBlock: string, maxBlock: string) {
     return validMessages;
 }
 
-async function start() {
-    if (isParsing) {
-      return;
-    }
-
-    isParsing = true;
-    console.log(`Parsing Blocks`)
-    const maxBlock = await Requests.getCurrentBlockHeight();
+export async function parseBlocks(config: Config, data: Forum) {
+    const maxBlock = await Requests.getCurrentBlockHeight(config);
     if (!maxBlock) {
       console.warn(`Failed to obtain block head`);
-      isParsing = false;
-      return;
+      return data;
     }
 
-    if (fs.existsSync('data.json')) {
-        jsonData = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
-    }
-
-    if (jsonData.lastBlock == maxBlock) {
+    if (data.lastBlock == maxBlock) {
         console.log(`Last Block is Head Block, not parsing.`);
-        isParsing = false;
-        return;
+        return data;
     }
 
-    const actions = await getBlockActions(jsonData.lastBlock, maxBlock as string);
-
+    const actions = await getBlockActions(config, data.lastBlock, maxBlock as string);
     for (let action of actions) {
         const [_, actionCode] = action.message.split(',');
         if (!ActionMapping[actionCode]) {
             continue;
         }
 
-        ActionMapping[actionCode](jsonData, action);
+        ActionMapping[actionCode](data, action);
     }
 
     if (!maxBlock) {
-      isParsing = false;
-      return;
+      return data;
     }
 
-    jsonData.lastBlock = maxBlock;
-    fs.writeFileSync('data.json', JSON.stringify(jsonData));
-    console.log(`Finished Parsing Blocks`)
-
-    isParsing = false;
+    data.lastBlock = maxBlock;
+    return data;
 }
 
-if (config.MODE === 'once') {
-  start();
-} else {
-  start();
-  setInterval(start, config.TIME_BETWEEN_PARSES_MS);
-}
 

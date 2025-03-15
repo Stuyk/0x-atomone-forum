@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "tsx ./src/index.ts"
+        "start": "tsx ./src/runtime.ts"
     },
     "dependencies": {
         "@cosmjs/crypto": "^0.33.0",
