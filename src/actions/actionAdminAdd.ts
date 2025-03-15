@@ -1,8 +1,8 @@
-import { Forum, MemoAction } from '../types';
+import { ACTION_CODES, Forum, MemoAction } from '../types';
 
 export function actionAdminAdd(jsonData: Forum, action: MemoAction) {
     const [_, actionCode, address] = action.message.split(',');
-    if (actionCode != '4') {
+    if (actionCode != ACTION_CODES.ADMIN_ADD) {
         console.warn(`Skipped ${action.hash}, action code was not valid.`);
         return;
     }

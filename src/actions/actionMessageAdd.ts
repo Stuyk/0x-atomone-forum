@@ -1,8 +1,8 @@
-import { Forum, MemoAction } from '../types';
+import { ACTION_CODES, Forum, MemoAction } from '../types';
 
 export function actionMessageAdd(jsonData: Forum, action: MemoAction) {
     const [_, actionCode, threadHash, content] = action.message.split(',');
-    if (actionCode != '1') {
+    if (actionCode != ACTION_CODES.MESSAGE_ADD) {
         console.warn(`Skipped ${action.hash}, action code was not valid.`);
         return;
     }

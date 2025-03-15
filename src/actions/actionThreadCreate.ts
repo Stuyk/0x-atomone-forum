@@ -1,8 +1,8 @@
-import { Forum, MemoAction } from '../types';
+import { ACTION_CODES, Forum, MemoAction } from '../types';
 
 export function actionThreadCreate(jsonData: Forum, action: MemoAction) {
     const [_, actionCode, title, content] = action.message.split(',');
-    if (actionCode != '0') {
+    if (actionCode != ACTION_CODES.THREAD_CREATE) {
         console.warn(`Skipped ${action.hash}, action code was not valid.`);
         return;
     }

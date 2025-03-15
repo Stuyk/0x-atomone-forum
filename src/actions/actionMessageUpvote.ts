@@ -1,8 +1,8 @@
-import { Forum, MemoAction } from '../types';
+import { ACTION_CODES, Forum, MemoAction } from '../types';
 
 export function actionMessageUpvote(jsonData: Forum, action: MemoAction) {
     const [_, actionCode, threadHash, content] = action.message.split(',');
-    if (actionCode != '1') {
+    if (actionCode != ACTION_CODES.MESSAGE_UPVOTE) {
         console.warn(`Skipped ${action.hash}, action code was not valid.`);
         return;
     }

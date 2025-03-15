@@ -1,8 +1,8 @@
-import { Forum, MemoAction } from '../types';
+import { ACTION_CODES, Forum, MemoAction } from '../types';
 
 export function actionThreadRemove(jsonData: Forum, action: MemoAction) {
     const [_, actionCode, threadHash] = action.message.split(',');
-    if (actionCode != '3') {
+    if (actionCode != ACTION_CODES.THREAD_REMOVE) {
         console.warn(`Skipped ${action.hash}, action code was not valid.`);
         return;
     }
