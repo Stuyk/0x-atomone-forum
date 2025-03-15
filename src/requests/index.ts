@@ -3,7 +3,7 @@ import { Transaction } from '../types';
 
 export async function getCurrentBlockHeight() {
     try {
-        const response = await fetch(`${config.ATOM_ONE_API_URL}/cosmos/base/tendermint/v1beta1/blocks/latest`);
+        const response = await fetch(`${config.API_URL}/cosmos/base/tendermint/v1beta1/blocks/latest`);
         if (!response.ok) {
             console.log(response);
             throw new Error(`Failed to fetch block: ${response.statusText}`);
@@ -19,7 +19,7 @@ export async function getCurrentBlockHeight() {
 
 export async function getBlockByHeight(blockHeight: number) {
     try {
-        const response = await fetch(`${config.ATOM_ONE_API_URL}/cosmos/base/tendermint/v1beta1/blocks/${blockHeight}`);
+        const response = await fetch(`${config.API_URL}/cosmos/base/tendermint/v1beta1/blocks/${blockHeight}`);
         if (!response.ok) {
             console.log(response);
             throw new Error(`Failed to fetch block: ${response.statusText}`);
@@ -34,14 +34,14 @@ export async function getBlockByHeight(blockHeight: number) {
 
 export async function getMemoFromTx(txHash: string, timestamp: string) {
     try {
-        const txResponse = await fetch(`${config.ATOM_ONE_API_URL}/cosmos/tx/v1beta1/txs/${txHash.toUpperCase()}`);
+        const txResponse = await fetch(`${config.API_URL}/cosmos/tx/v1beta1/txs/${txHash.toUpperCase()}`);
 
         if (!txResponse.ok) {
             throw new Error(`Failed to fetch transaction: ${txResponse.statusText}`);
         }
 
         const txData = (await txResponse.json()) as Transaction;
-        if (!txData.tx.body.memo.startsWith(config.MSG_PREFIX)) {
+        if (!txData.tx.body.memo.startsWith(config.MEMO_PREFIX)) {
             return null;
         }
 
@@ -54,7 +54,7 @@ export async function getMemoFromTx(txHash: string, timestamp: string) {
                 continue;
             }
 
-            if (message.to_address !== config.TO_ADDRESS) {
+            if (message.to_address !== config.OWNER) {
                 continue;
             }
 

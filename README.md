@@ -45,7 +45,23 @@ To delete a reply, send a memo in the following format:
 To delete a thread and all of its messages, send a memo in the following format:
 
 ```
-0xForum,2,thread-hash
+0xForum,3,thread-hash
+```
+
+### Add Admin
+
+Requires ownership of the board to add an admin.
+
+```
+0xForum,4,address
+```
+
+### Remove Admin
+
+Requires ownership of the board to remove an admin.
+
+```
+0xForum,5,address
 ```
 
 ## Config
@@ -55,13 +71,13 @@ If you wish to change the configuration, the code block below tells you what eac
 ```ts
 {
     // Where the pull the blocks, transactions, and block heights from
-    "ATOM_ONE_API_URL": "https://atomone-api.allinbits.com",
+    "API_URL": "https://atomone-api.allinbits.com",
     // What prefix is required in a message in order to consider it as a Forum Message
-    "MSG_PREFIX": "0xForum",
+    "MEMO_PREFIX": "0xForum",
     // Where the transfer must be sent in order to parse posts, threads, etc.
-    "TO_ADDRESS": "atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep",
+    "OWNER": "atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep",
     // The minimum block where to start parsing data from
-    "DEFAULT_MIN_BLOCK": "2168218",
+    "START_BLOCK": "2168218",
     // There are two formats, 'once' and 'runtime'
     // runtime - Creates an interval that parses blocks every 15 seconds.
     // once - Runs the program once, and then exits.

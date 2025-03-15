@@ -18,5 +18,11 @@ export function actionThreadRemove(jsonData: Forum, action: MemoAction) {
         return;
     }
 
+    if (action.author !== jsonData.threads[threadIndex].messages[0].author && action.author !== jsonData.owner && !jsonData.admins.includes(action.author)) {
+        console.warn(`Skipped ${action.hash}, not owner of message`);
+        return;
+    }
+
     jsonData.threads.splice(threadIndex, 1);
+    console.log('Remove Thread Invoked')
 }

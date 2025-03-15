@@ -12,13 +12,15 @@ const ActionMapping = {
     1: Actions.actionMessageAdd,
     2: Actions.actionMessageRemove,
     3: Actions.actionThreadRemove,
+    4: Actions.actionAdminAdd,
+    5: Actions.actionAdminRemove,
 };
 
 let jsonData: Forum = {
-    owner: 'atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep',
-    admins: ['atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep'],
+    lastBlock: config.START_BLOCK,
+    owner: config.OWNER,
+    admins: [config.OWNER],
     threads: [],
-    lastBlock: config.DEFAULT_MIN_BLOCK,
 };
 
 let isParsing = false;
