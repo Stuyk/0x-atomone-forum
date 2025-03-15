@@ -1,7 +1,7 @@
 import { ACTION_CODES, Forum, MemoAction } from '../types';
 
 export function actionMessageUpvote(jsonData: Forum, action: MemoAction) {
-    const [_, actionCode, threadHash, content] = action.message.split(',');
+    const [_, actionCode, threadHash, msgHash] = action.message.split(',');
     if (actionCode != ACTION_CODES.MESSAGE_UPVOTE) {
         console.warn(`Skipped ${action.hash}, action code was not valid.`);
         return;
@@ -12,7 +12,7 @@ export function actionMessageUpvote(jsonData: Forum, action: MemoAction) {
         return;
     }
 
-    if (!content) {
+    if (!msgHash) {
         console.warn(`Skipped ${action.hash}, missing Content at position 2`);
         return;
     }
@@ -23,7 +23,7 @@ export function actionMessageUpvote(jsonData: Forum, action: MemoAction) {
         return;
     }
 
-    const msgIdx = jsonData.threads[threadIndex].messages.findIndex((x) => x.hash === action.hash);
+    const msgIdx = jsonData.threads[threadIndex].messages.findIndex((x) => x.hash === msgHash);
     if (msgIdx <= -1) {
         console.warn(`Skipped ${action.hash}, message could not be found.`);
         return;
