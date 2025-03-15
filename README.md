@@ -83,7 +83,11 @@ If you wish to change the configuration, the code block below tells you what eac
     // once - Runs the program once, and then exits.
     "MODE": "once",
     // Parses blocks every 15 seconds, only applies when in runtime mode
-    "TIME_BETWEEN_PARSES_MS": 15000
+    "TIME_BETWEEN_PARSES_MS": 15000,
+    // The minimum tokens required to parse the message. This is 0.000001 ATONE
+    "MINIMUM_FEE": "1",
+    // The required denom of the tokens to parse the message.
+    "DENOM": "uatone",
 }
 ```
 

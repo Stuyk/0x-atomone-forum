@@ -3,6 +3,8 @@
     "MEMO_PREFIX": "0xForum",
     "OWNER": "atone1uq6zjslvsa29cy6uu75y8txnl52mw06j6fzlep",
     "START_BLOCK": "2168218",
+    "MINIMUM_FEE": "1",
+    "DENOM": "uatone",
     "MODE": "once",
     "TIME_BETWEEN_PARSES_MS": 15000
 }

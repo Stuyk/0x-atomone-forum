@@ -1,5 +1,6 @@
 import config from '../../config.json';
 import { Transaction } from '../types';
+import configInfo from '../../config.json';
 
 export async function getCurrentBlockHeight() {
     try {
@@ -58,7 +59,27 @@ export async function getMemoFromTx(txHash: string, timestamp: string) {
                 continue;
             }
 
-            return { message: txData.tx.body.memo, hash: txHash, timestamp, author: message.from_address };
+            let total = BigInt(0);
+            for(let coin of message.amount) {
+                if (coin.denom.toLowerCase() !== configInfo.DENOM) {
+                    continue;
+                }
+
+                total += BigInt(coin.amount);
+            }
+
+            if (total < BigInt(configInfo.MINIMUM_FEE)) {
+                console.warn(`Skipping message, minimum fee was not enough. From -> ${message.from_address}`)
+                continue;
+            }
+
+            return { 
+                timestamp, 
+                hash: txHash, 
+                author: message.from_address,
+                message: txData.tx.body.memo,
+                amount: total.toString(),
+            };
         }
 
         return null;
