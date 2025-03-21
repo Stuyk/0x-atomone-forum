@@ -1,3 +1,7 @@
+> [!IMPORTANT]  
+> This repository was archived in favor of the `@allinbits/chronostate` library.
+> The individual library can be viewed [here](https://www.npmjs.com/package/@atomone/chronostate)
+
 # 0x AtomOne Forum 🌐
 
 Welcome to **0x AtomOne Forum** – a decentralized forum powered entirely by **GitHub Actions** and the **AtomOne** blockchain.
